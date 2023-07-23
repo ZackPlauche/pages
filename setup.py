@@ -7,7 +7,5 @@ setup(
     install_requires=[
         'pydantic==2.0.3',
         'selenium==4.10.0',
-        'PySocks==1.7.1',
     ]
-
 )
