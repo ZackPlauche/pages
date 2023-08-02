@@ -5,8 +5,6 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.remote.webdriver import WebDriver
 from pydantic import BaseModel, ConfigDict, model_validator
 
-from .models import URLModel
-
 
 class Page(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
@@ -44,8 +42,8 @@ class FormPage(Page):
 
 
 class DetailPage(Page):
-    model: ClassVar[Type[URLModel]]
-    instance: URLModel
+    model: ClassVar[Type[BaseModel]]
+    instance: BaseModel
     url: str
 
     @model_validator(mode='before')
@@ -60,7 +58,7 @@ class DetailPage(Page):
         return data
     
     @classmethod
-    def bring(cls, driver: WebDriver, instance: URLModel, **params):
+    def bring(cls, driver: WebDriver, instance: BaseModel, **params):
         url = instance.url
         if params:
             url = url + '?' + '&'.join([f'{key}={value}' for key, value in params.items()])
